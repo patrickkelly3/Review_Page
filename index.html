@@ -4,8 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css"
 </head>
 <body>
+    <script src="script.js"></script>
+    <header>
+        <h2 class="logo" id="gradient-text">ConnectUGA</h2>
+        <nav class="navigation">
+            <a class="link" href="contact.html">Contact</a>
+            <button class="shadow__btn">Create Account</button>
+        </nav>
+    </header>
+    <br><br>
+    <div class="card">
+        <h2>Space for DAWGs to Connect!</h2>
+    </div>
     
+
+<div class="form-container">
+	<p class="title">Login</p>
+	<form class="form">
+		<div class="input-group">
+			<label for="username">Username</label>
+			<input type="text" name="username" id="username" placeholder="">
+		</div>
+		<div class="input-group">
+			<label for="password">Password</label>
+			<input type="password" name="password" id="password" placeholder="">
+			<div class="forgot">
+				<a rel="noopener noreferrer" href="#">Forgot Password?</a>
+			</div>
+		</div>
+		<button class="sign">Sign in</button>
+	</form>
+	<p class="signup">Don't have an account?
+		<a rel="noopener noreferrer" href="#" class="bold">Sign up</a>
+	</p>
+</div>
+
+    
+    <div class="wrapper">
+        <div class="form-box login">
+            <h2>Login</h2>
+            <form action="#">
+                <div class="input-box">
+                    <label>Email</label>
+                    <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+                    <input type="email" required>
+                </div>
+                <div class="input-box">
+                    <label>Password</label>
+                    <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                    <input type="Password" required>
+                </div>
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox">Remember me
+                    </label>
+                    <a href="#" style="text-decoration: none;">Forgot Password</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="login-register"></div>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
