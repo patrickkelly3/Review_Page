@@ -1,6 +1,6 @@
 body{
 margin: 3px;
-background-image: url(backgroundImg.jpg);
+background-image: url('../imgs/backgroundImg.jpg');
 background-repeat: no-repeat;
 background-position: center;
 background-attachment: fixed;
