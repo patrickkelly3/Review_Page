@@ -46,7 +46,7 @@ export default function Menu() {
                 <FaBars className={styles.icon} onClick={click}/>
                 <ul className={styles.classList}>
                     {DUMMY.map((current, i) => <li><Item class={current}></Item></li>)}
-                    <li><Link className={styles.link} href={"/"}>+ Add New Class</Link></li>
+                    <li><Link className={styles.link} href={"/addItemComponent"}>+ Add New Class</Link></li>
                 </ul>    
             </div>
         );
