@@ -1,6 +1,7 @@
 .link {
     text-decoration: none;
     color: white;
+    margin-left: .5em;
 }
 .link:hover {
     text-decoration: none;

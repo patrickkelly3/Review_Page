@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./Item.module.css";
+import Image from "next/image";
 
 type Class = {
     image: string,
@@ -13,7 +14,10 @@ interface ClassProps {
 
 export default function Item(props: ClassProps) {
     return(
-        <Link className={styles.link} href={"/"}>{props.class.name}</Link>
+        <div>
+            <Image src={props.class.image} alt={props.class.name} height={32} width={32}></Image>
+            <Link className={styles.link} href={"/"}>{props.class.name}</Link>
+        </div>
     );
 
 }
