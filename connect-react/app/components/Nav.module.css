@@ -6,7 +6,7 @@
     background-color:white;
     height: 5%;
     overflow-y: visible;
-    background-image: url("../backgroundImg.jpg");
+    background-image: url("../imgs/backgroundImg.jpg");
     background-position: 10%;
     backdrop-filter: blur(100%);
 }

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./addItem.module.css";
+import Link from "next/link";
 
 interface CourseDetails {
     title: string;
@@ -57,7 +58,8 @@ const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>): void => {
         event.preventDefault(); // Prevent default form submission
         setCourseDetails(null); // Reset details on new input
         setError(null);
-        console.log("CRN added to profile");
+        alert("CRN Added to profile");
+        
         
     };
 
@@ -108,9 +110,7 @@ const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>): void => {
                     </div>
                 )}
             </main>
-            <button type="submit" className={styles.submitButton}>
-                        Register
-                    </button>
+            <Link href={"/"}><button className={styles.button}>Register</button></Link>
         </div>
     );
 }
