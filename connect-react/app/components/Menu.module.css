@@ -42,3 +42,12 @@
     padding-top: 1em;
     font-size: 20px;
 }
+
+.link {
+    text-decoration: none;
+    color: white;
+}
+.link:hover {
+    text-decoration: none;
+    color: purple;
+}

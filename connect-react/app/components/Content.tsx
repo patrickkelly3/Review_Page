@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Item from "./Item";
+import ItemContainer from "./ItemContainer";
 
 
 type Class = {
@@ -16,10 +16,11 @@ const DUMMY: Class = {
     crn: 363636,
     classmates: ["Tim", "Bobby", "Joanne"]
 }
+
 export default function Content() {
     const[currentClass, changeClass] = useState(DUMMY);
 
     return(
-        <Item class={currentClass}/>
+        <ItemContainer class={currentClass}/>
     );
 }

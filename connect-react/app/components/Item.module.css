@@ -1,15 +1,8 @@
-.container {
-    background-color: grey;
-    width: 50%;
-    margin-top: 1em;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1em;
-    border-radius: .5em;
-    border: solid black;
+.link {
+    text-decoration: none;
+    color: white;
 }
-
-.image {
-    border: solid black;
-    border-radius: .5em ;
+.link:hover {
+    text-decoration: none;
+    color: purple;
 }
