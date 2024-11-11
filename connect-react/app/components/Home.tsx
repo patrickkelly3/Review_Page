@@ -1,7 +1,9 @@
-import React, {useState} from "react";
-import styles from 'globals.css';
+"use client";
 
-export default function App  () {
+import React, {useState} from "react";
+import styles from './Home.module.css';
+
+export default function Home () {
   const [formType, setFormType] = useState('login');
 
   const toggleForm = () => {
@@ -35,8 +37,8 @@ export default function App  () {
   }, []);
 
   return (
-    <div>
-      <header>
+    <div className="container">
+      <header className = "header">
         <h2 className="logo" id="gradient-text">
           ConnectUGA
         </h2>
