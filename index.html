@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css"
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
 </head>
 <body>
-    <script src="script.js"></script>
     <header>
         <h2 class="logo" id="gradient-text">ConnectUGA</h2>
         <nav class="navigation">
@@ -15,62 +17,104 @@
             <button class="shadow__btn">Create Account</button>
         </nav>
     </header>
-    <br><br>
-    <div class="card">
-        <h2>Space for DAWGs to Connect!</h2>
+    
+        <video autoplay loop muted playsinline class="back-video">
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        <div class="contents">
+            <br><br><br>
+            <div class="form-container">
+                <p id="form-title" class="title">Login</p>
+                <form id="auth-form" class="form">
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password">
+                        <div class="forgot">
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <button class="sign" type="button">Sign in</button>
+                </form>
+                <p id="toggle-auth" class="signup">Don't have an account?
+                    <a href="#" class="bold" onclick="toggleForm()">Sign up</a>
+                </p>
+            </div>
+            
     </div>
-    
 
-<div class="form-container">
-	<p class="title">Login</p>
-	<form class="form">
-		<div class="input-group">
-			<label for="username">Username</label>
-			<input type="text" name="username" id="username" placeholder="">
-		</div>
-		<div class="input-group">
-			<label for="password">Password</label>
-			<input type="password" name="password" id="password" placeholder="">
-			<div class="forgot">
-				<a rel="noopener noreferrer" href="#">Forgot Password?</a>
-			</div>
-		</div>
-		<button class="sign">Sign in</button>
-	</form>
-	<p class="signup">Don't have an account?
-		<a rel="noopener noreferrer" href="#" class="bold">Sign up</a>
-	</p>
-</div>
-
-    
-    <div class="wrapper">
-        <div class="form-box login">
-            <h2>Login</h2>
-            <form action="#">
-                <div class="input-box">
-                    <label>Email</label>
-                    <span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
-                    <input type="email" required>
-                </div>
-                <div class="input-box">
-                    <label>Password</label>
-                    <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                    <input type="Password" required>
-                </div>
-                <div class="remember-forgot">
-                    <label>
-                        <input type="checkbox">Remember me
-                    </label>
-                    <a href="#" style="text-decoration: none;">Forgot Password</a>
-                </div>
-                <button type="submit" class="btn">Login</button>
-                <div class="login-register"></div>
-            </form>
+    <br><br><br><br><br><br><br><br><br>
+    <section class="space">
+        <div class="card">
+            <h2>Space for DAWGs to Connect!</h2>
         </div>
-    </div>
+    </section>
 
+    <section class="space1">
+        <div class="takeAdvantageOfPeerPaws">
+            <h2>Take Advantage of PeerPaws</h2>
+            <br>
+            <ul>
+                <li><i class="fa-solid fa-paw"></i>For DAWGS to help DAWGS</li>
+                <br>
+                <li><i class="fa-solid fa-paw"></i>To join classes using your course number (CRN)</li>
+                <br>
+                <li><i class="fa-solid fa-paw"></i>To connect with your friends</li>
+                <br>
+                <li><i class="fa-solid fa-paw"></i>To find your friends who are taking the same class as you are!</li>
+              </ul>
+        </div>
+        <div class="photo">
+            <img src="DAWG.jpg" alt="Description of image" width="500" style="border-radius: 10px;">
+        </div>
+          
+    </section>
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Section that appears after scrolling past the video -->
+    <section class="image-section">
+        <div class="about-container">
+            <h2>About</h2>
+            <p>At the University of Georgia, students are more than learners—they are leaders, innovators, and changemakers in the making. The university stands as a beacon of opportunity, a place where dreams are nurtured with the finest resources and unwavering support. With a commitment to excellence, UGA provides students not just with knowledge, but with the tools, networks, and experiences that fuel ambition and inspire action. Here, every challenge is an opportunity, every classroom a gateway to discovery, and every connection a step toward greatness. The University of Georgia doesn't just guide its students; it empowers them to exceed their own expectations, to rise beyond boundaries, and to make a meaningful impact on the world. UNLOCK your true potential by being a DAWG!
+            </p>
+        </div>
+        <img src="backgroundImg.jpg" alt="Background Image" class="scroll-image">
+    </section>
+
+    <script src="script.js"></script>
+
+    <footer class="uga-footer">
+        <div class="footer-content">
+          <div class="footer-left">
+            <img src="UGAlogo.png" alt="University of Georgia Logo" class="uga-logo">
+            <p>&copy; University of Georgia, Athens, GA 30602</p>
+            <p>706-542-3000</p>
+          </div>
+          <div class="footer-center">
+            <a href="#">Schools and Colleges</a>
+            <a href="#">Directory</a>
+            <a href="#">MyUGA</a>
+          </div>
+          <div class="footer-right">
+            <a href="#">Employment Opportunities</a>
+            <a href="#">Copyright and Trademarks</a>
+            <a href="#">Privacy</a>
+            <a href="#">Website Feedback</a>
+            <a href="#">Human Trafficking Notice</a>
+            <a href="#">Reporting Hotline</a>
+          </div>
+        </div>
+        <div class="social-media">
+          <a></i>#UGA</a>
+          <a href="https://x.com/universityofga"><i class="fab fa-twitter" style="font-size:24px;color:lightskyblue"></i></a>
+          <a href="https://www.instagram.com/universityofga/"><i class="fab fa-instagram" style="font-size:24px;color:red"></i></a>
+          <a href="https://www.linkedin.com/school/university-of-georgia/posts/?feedView=all"><i class="fab fa-linkedin" style="font-size:24px;color:blue"></i></a>
+
+        </div>
+      </footer>
+      
+
 </body>
 </html>
