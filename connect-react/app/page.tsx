@@ -5,13 +5,18 @@ import Home from "./components/Home";
 
 export default function App() {
   return (
- 
-   <div>
+    /*
+    <div>
       <Menu/>
       <Nav/>
       <Content/>
     </div>
+    */
    
+   <div>
+
+    <Home/>
+   </div>
     
     
   );
