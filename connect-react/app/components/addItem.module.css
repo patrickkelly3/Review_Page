@@ -1,5 +1,4 @@
 
-
 /* Container */
 .container {
     width: 80%;
@@ -9,6 +8,10 @@
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    min-height: 60vh; /* Make the page longer */
+    display: flex;
+    flex-direction: column; /* Ensure proper vertical alignment */
+
 }
 
 /* Header */
@@ -20,37 +23,73 @@
     color: #e70e0e;
     padding: 20px 0;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    position: relative; /* For positioning child elements like the back button */
+    display: flex;
+    justify-content: center; /* Center the header text */
+    align-items: center;
+}
+
+/* Back button */
+.exit {
+    position: absolute; /* Place the button relative to the header */
+    top: 10px; /* Add some spacing from the top */
+    left: 10px; /* Add some spacing from the left */
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.button {
+    top: 10px; /* Add some spacing from the top */
+    left: 10px; /* Add some spacing from the left */
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 /* Main content */
 .main-content {
-    padding: 20px;
+    flex: 1; /* Allow content to grow and fill remaining space */
+    padding: 50px 20px; /* Add spacing from the header */
 }
 
 /* Form styles */
 .form {
-    margin-bottom: 20px;
+    margin: 20px auto;
 }
 
 .form-group {
     margin-bottom: 15px;
     text-align: left;
     width: 60%;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
 .label {
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
 
 .input {
-    width: 100%;
+    width: 60%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
+    margin-bottom: 20px;
 }
 
 /* Submit button */
@@ -78,24 +117,24 @@
 
 /* Course details */
 .details-section {
-    display: flex; /* Use flexbox for layout */
-    flex-wrap: wrap; /* Allow wrapping of details on smaller screens */
-    justify-content: space-between; /* Space out details evenly */
-    gap: 15px; /* Add spacing between detail boxes */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
     margin-top: 20px;
     padding: 10px;
 }
 
 /* Each detail box */
 .detail {
-    flex: 1 1 calc(50% - 20px); /* Ensure details take up 50% width minus gap */
+    flex: 1 1 calc(50% - 20px);
     padding: 15px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     display: flex;
-    align-items: center; /* Align title and text vertically */
-    gap: 10px; /* Add space between title and text */
+    align-items: center;
+    gap: 10px;
 }
 
 /* Title circle in each detail */
@@ -103,22 +142,21 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 40px; /* Set consistent size */
+    width: 40px;
     height: 40px;
     font-size: 16px;
     font-weight: bold;
     background-color: #ff4a4a;
     color: #fff;
-    border-radius: 50%; /* Make it a circle */
-    flex-shrink: 0; /* Prevent shrinking */
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
 /* Detail text */
 .detail-info {
-    font-size: 16px; /* Increase font size for better readability */
+    font-size: 16px;
     color: #333;
     margin: 0;
-    line-height: 1.5; /* Add spacing between lines */
-    flex: 1; /* Allow text to take the remaining space */
+    line-height: 1.5;
+    flex: 1;
 }
-
