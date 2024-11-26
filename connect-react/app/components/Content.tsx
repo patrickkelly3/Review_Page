@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import ItemContainer from "./ItemContainer";
-
+import Chat from "./Chat";
 
 type Class = {
     image: string,
@@ -21,6 +21,9 @@ export default function Content() {
     const[currentClass, changeClass] = useState(DUMMY);
 
     return(
-        <ItemContainer class={currentClass}/>
+        <div>
+            <ItemContainer class={currentClass}/>
+            <Chat class={currentClass}/>
+        </div>
     );
 }

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-import { uUser } from "./userSchema"; // Correct import of the uUser interface
+import { IUser } from "./userSchema"; // Correct import of the uUser interface
 
 export interface cClass extends Document {
   _id: string;
@@ -7,7 +7,7 @@ export interface cClass extends Document {
   title: string;
   professor: string;
   period: string;
-  list: uUser[]; // Use the imported uUser interface
+  list: IUser[]; // Use the imported uUser interface
 }
 const classSchema = new Schema<cClass>({
   _id: {

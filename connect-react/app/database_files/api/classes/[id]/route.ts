@@ -1,13 +1,17 @@
-import connectMongoDB from "/Users/patrickkelly/Desktop/Class_Connector/connect-react/src/libs/mongodb";
-import User from "/Users/patrickkelly/Desktop/Class_Connector/connect-react/src/models/userSchema";
+import connectMongoDB from "../../../libs/mongodb";
+import Class from "../../../models/classSchema";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import mongoose from "mongoose";
 import { Types } from "mongoose"; // For ObjectId conversion
 
+interface RouteParams{
+    params: {
+    id?: string;
+    }
+ }
 
 export async function GET(request: NextRequest, context: { params: {id?: string}}) {
-  
   // Access and await the params
   const { params } = context;
   const id = params?.id;
@@ -20,37 +24,35 @@ export async function GET(request: NextRequest, context: { params: {id?: string}
   }
 
   try {
-    
     const query: any = { id }; // Use 'id' for matching
     console.log("Query:", query);
 
-    const results = await User.find(query);
+    const results = await Class.find(query);
 
     if (!results || results.length === 0) {
       return NextResponse.json(
-        { error: "No users found matching criteria" },
+        { error: "No classes found matching criteria" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({ results }, { status: 200 });
- 
   } catch (error) {
+
     if (error instanceof Error) {
-      // Narrow the type to `Error` to access `.message`
-      console.error("Error fetching user:", error.message);
-      return NextResponse.json(
-          { error: "Error fetching user", details: error.message },
-          { status: 500 }
-      );
-  }
-  // Fallback for non-Error types
-  console.error("Unknown error occurred:", error);
-  return NextResponse.json(
-      { error: "An unknown error occurred" },
+        console.error("Error fetching class:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch class", details: error.message },
       { status: 500 }
-  );
-  
+    );
+    }
+    
+    console.error("Unknown error occurred:", error);
+    return NextResponse.json(
+        { error: "An unknown error occurred" },
+        { status: 500 }
+    );
+    
   }
 }
 
@@ -66,59 +68,60 @@ export async function PUT(request: NextRequest, context: { params: { id?: string
 
   // Parse the request body to get the new user
   const body = await request.json();
-  const {action, newClass} = body; // Expecting `user` in the request body
+  const {action, newUser} = body; // Expecting `user` in the request body
 
-  if (!newClass) {
-    return NextResponse.json({ error: "Class data is required" }, { status: 400 });
+  if (!newUser) {
+    return NextResponse.json({ error: "User data is required" }, { status: 400 });
   }
 
   // Connect to the database
   await connectMongoDB();
 
   try {
-    let updatedUser;
+    let updatedClass;
 
     if (action == 'add') {
         // Find and update the Class object
-        updatedUser = await User.findOneAndUpdate(
+        updatedClass = await Class.findOneAndUpdate(
         { id }, // Match the document with the given ID
-        { $push: { list: newClass } }, // Add `newUser` to the `users` array
+        { $push: { list: newUser } }, // Add `newUser` to the `users` array
         { new: true } // Return the updated document
       );
     }
 
     else if (action == 'delete') {
         // Find and update the Class object
-        updatedUser = await User.findOneAndUpdate(
+        updatedClass = await Class.findOneAndUpdate(
         { id }, // Match the document with the given ID
-        { $pull: { list: newClass } }, // Add `newUser` to the `users` array
+        { $pull: { list: newUser } }, // Add `newUser` to the `users` array
         { new: true } // Return the updated document
       );
     }
     
 
-    if (!updatedUser) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    if (!updatedClass) {
+      return NextResponse.json({ error: "Class not found" }, { status: 404 });
     }
 
     return NextResponse.json(
-      { message: "Class updated successfully", updatedUser },
+      { message: "Class updated successfully", updatedClass },
       { status: 200 }
     );
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error updating Class:", error);
-      return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
-      { status: 500 }
-    );
-    }
 
+    if (error instanceof Error) {
+        console.error("Error updating Class:", error);
+        return NextResponse.json(
+        { error: "Internal Server Error", details: error.message },
+        { status: 500 }
+        );
+    }
     console.error("Unknown error occurred:", error);
     return NextResponse.json(
-          { error: "An unknown error occurred" },
-          { status: 500 }
-      );
+        { error: "An unknown error occurred" },
+        { status: 500 }
+    );
+    
   }
 }
 

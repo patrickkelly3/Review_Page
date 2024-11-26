@@ -1,5 +1,5 @@
-import connectMongoDB from "/Users/patrickkelly/Desktop/Class_Connector/connect-react/src/libs/mongodb";
-import Class from "../../../models/classSchema";
+import connectMongoDB from "../../libs/mongodb";
+import Class from "../../models/classSchema";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { Types } from "mongoose"; // For ObjectId conversion

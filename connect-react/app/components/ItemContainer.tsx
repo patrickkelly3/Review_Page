@@ -23,10 +23,12 @@ export default function ItemContainer(props: ClassProps) {
                 priority
             />
             <h1>{props.class.name} CRN#{props.class.crn}</h1>
-            <header>Classmates:</header>
-            <ul>
-                {props.class.classmates.map((current, i) => <li>{current}</li>)}
-            </ul>
+            <div>
+                <header>Classmates:</header>
+                <ul>
+                    {props.class.classmates.map((current, i) => <li key={i}>{current}</li>)}
+                </ul>
+            </div>
         </div>
     );
 }

@@ -1,5 +1,5 @@
-import connectMongoDB from "/Users/patrickkelly/Desktop/Class_Connector/connect-react/src/libs/mongodb";
-import {User} from "/Users/patrickkelly/Desktop/Class_Connector/connect-react/src/models/userSchema";
+import connectMongoDB from "../../libs/mongodb";
+import {User} from "../../models/userSchema";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { Types } from "mongoose"; // For ObjectId conversion
