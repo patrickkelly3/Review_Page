@@ -1,0 +1,217 @@
+/* Scoped styles for Contact.module.css */
+
+/* General Styling */
+.oneCol {
+  margin: auto;
+  max-width: 800px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  color: black;
+}
+
+.backVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+
+.oneCol h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.oneCol p {
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.oneCol hr {
+  border: 1px solid rgba(200, 200, 200, 0.5);
+  margin: 20px 0;
+}
+
+/* Header Styling */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: black;
+}
+
+.navigation {
+  display: flex;
+  gap: 15px;
+}
+
+.link {
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: red;
+}
+
+.button {
+  font-size: 1rem;
+  padding: 8px 16px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: darkred;
+}
+
+/* Form Styling */
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contactFormLabel {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.contactFormInput,
+.contactFormTextarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(200, 200, 200, 0.9);
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: white;
+}
+
+.contactFormTextarea {
+  resize: none;
+}
+
+.contactFormSubmit {
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contactFormSubmit:hover {
+  background-color: darkred;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1024px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .navigation {
+    margin-top: 10px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .oneCol {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo {
+    font-size: 1.5rem;
+  }
+
+  .link {
+    font-size: 1rem;
+  }
+
+  .button {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+  }
+
+  .oneCol h1 {
+    font-size: 2rem;
+  }
+
+  .oneCol p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .link {
+    font-size: 0.9rem;
+  }
+
+  .button {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .oneCol {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .oneCol h1 {
+    font-size: 1.8rem;
+  }
+
+  .oneCol p {
+    font-size: 0.9rem;
+  }
+
+  .contactFormSubmit {
+    font-size: 1rem;
+    padding: 8px;
+  }
+}

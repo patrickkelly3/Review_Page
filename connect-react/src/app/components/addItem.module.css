@@ -1,0 +1,162 @@
+
+/* Container */
+.container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    min-height: 60vh; /* Make the page longer */
+    display: flex;
+    flex-direction: column; /* Ensure proper vertical alignment */
+
+}
+
+/* Header */
+.header {
+    background-image: url('../imgs/backgroundImg.jpg'); /* Replace with the path to your image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #e70e0e;
+    padding: 20px 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    position: relative; /* For positioning child elements like the back button */
+    display: flex;
+    justify-content: center; /* Center the header text */
+    align-items: center;
+}
+
+/* Back button */
+.exit {
+    position: absolute; /* Place the button relative to the header */
+    top: 10px; /* Add some spacing from the top */
+    left: 10px; /* Add some spacing from the left */
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.button {
+    top: 10px; /* Add some spacing from the top */
+    left: 10px; /* Add some spacing from the left */
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Main content */
+.main-content {
+    flex: 1; /* Allow content to grow and fill remaining space */
+    padding: 50px 20px; /* Add spacing from the header */
+}
+
+/* Form styles */
+.form {
+    margin: 20px auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+    width: 60%;
+    margin: 10px auto;
+}
+
+.label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.input {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Submit button */
+.submit-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #555;
+}
+
+/* Error message */
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Course details */
+.details-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+/* Each detail box */
+.detail {
+    flex: 1 1 calc(50% - 20px);
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Title circle in each detail */
+.detail-title {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #ff4a4a;
+    color: #fff;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Detail text */
+.detail-info {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    line-height: 1.5;
+    flex: 1;
+}
