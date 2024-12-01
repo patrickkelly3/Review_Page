@@ -1,6 +1,5 @@
 "use client";
-//hellow
-import '@fortawesome/fontawesome-free/css/all.min.css';
+
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter
 import "./Login.css";
@@ -51,23 +50,20 @@ export default function Login({ onSignIn }: LoginProps) {
     }, []);
 
     const handleSignIn = () => {
-        const username = (document.getElementById("username") as HTMLInputElement).value;
-        const password = (document.getElementById("password") as HTMLInputElement).value;
-
-        if (username === "test" && password === "test123") { // Mock validation
+        
             router.push("/profileComponent"); // Redirect to /profileComponent
-        } else {
-            setErrorMessage("Incorrect username or password");
-        }
+        
     };
 
     return (
         <>
             <div>
-            
+            <video autoPlay loop muted playsInline className="back-video">
+                    <source src="/video.mp4" type="video/mp4" />
+                </video>
             </div>
             <div className="header">
-                <h2 className="logo" id="gradient-text">PeerPAWS</h2>
+                <h2 className="logo" id="gradient-text">UGAConnect</h2>
                 <nav className="navigation">
                     <a className="link" href="contact.html">Contact</a>
                     <button className="shadow__btn" onClick={showSignUpForm}>Create Account</button>
@@ -102,7 +98,7 @@ export default function Login({ onSignIn }: LoginProps) {
                                     <input type="password" name="password" id="password" />
                                 </div>
                                 <br />
-                                <button className="sign" type="button">Sign Up</button>
+                                <button className="sign" type="button" onClick={handleSignIn}>Sign Up</button>
                             </>
                         ) : (
                             <>
@@ -133,7 +129,7 @@ export default function Login({ onSignIn }: LoginProps) {
             <footer className="uga-footer">
                 <div className="footer-content">
                     <div className="footer-left">
-                        <img src="UGAlogo.png" alt="University of Georgia Logo" className="uga-logo" />
+                        <img src="/UGAlogo.png" alt="University of Georgia Logo" className="uga-logo" />
                         <p>&copy; University of Georgia, Athens, GA 30602</p>
                         <p>706-542-3000</p>
                     </div>

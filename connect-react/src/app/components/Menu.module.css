@@ -1,19 +1,22 @@
+
+
 .clicked {
     position: absolute;
     background-color: black;
     display: flex;
     justify-content: center;
     width: 15%;
-    position: absolute;
     z-index: 1;
     left: 0;
     color: white;
-    background-color: black;
-    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     height: 100%;
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: thin; /* Optional: style for thin scrollbars (Firefox) */
+    scrollbar-color: white black; /* Optional: color for scrollbars (Firefox) */
 }
+
 .clickedoff {
     position: absolute;
     left: .5em;
@@ -51,3 +54,84 @@
     text-decoration: none;
     color: purple;
 }
+
+
+/*
+.clicked {
+    position: absolute;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 20%; 
+    height: 100%;
+    z-index: 1;
+    left: 0;
+    padding: 1em;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.clickedoff {
+    position: fixed;
+    left: 0.5em;
+    top: 1em;
+    z-index: 2;
+    color: white;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4em;
+    width: 4em;
+    border-radius: 0.5em;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.icon {
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.classList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.classList > li {
+    padding: 1em 0;
+    font-size: 1.2em;
+    border-bottom: 1px solid gray;
+    width: 100%;
+}
+
+.classList > li:last-child {
+    border-bottom: none;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 0.5em 0;
+    display: inline-block;
+}
+
+.link:hover {
+    text-decoration: underline;
+    color: purple;
+}
+.clicked img {
+    max-width: 60%; 
+    height: auto;    
+    display: block;  
+    margin: 0 auto; 
+    max-height: 75px; 
+    object-fit: contain; 
+}
+*/

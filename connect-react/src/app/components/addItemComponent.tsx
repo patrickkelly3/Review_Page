@@ -8,7 +8,7 @@ interface Class {
   title: string;
   name: string;
   professor: string;
-  timeSlot: string;
+  period: string;
 }
 
 export default function AddItemComponent() {
@@ -116,7 +116,7 @@ export default function AddItemComponent() {
               <strong>Professor:</strong> {oneClass.professor}
             </p>
             <p>
-              <strong>Time Slot:</strong> {oneClass.timeSlot}
+              <strong>Time Slot:</strong> {oneClass.period}
             </p>
           </div>
         )}
