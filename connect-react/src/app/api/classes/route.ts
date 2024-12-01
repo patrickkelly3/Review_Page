@@ -17,9 +17,8 @@ export async function POST(request: NextRequest) {
   await connectMongoDB();
 
   try {
-    // Create and save the class document
     const newClass = await Class.create({
-      id, // Custom ID for the class
+      id,
       name,
       title,
       professor,
@@ -27,12 +26,16 @@ export async function POST(request: NextRequest) {
       list,
     });
 
-    return NextResponse.json({ message: "Class added successfully", data: newClass }, { status: 201 });
+    return NextResponse.json(
+      { message: "Class added successfully", data: newClass },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error adding class:", error);
     return NextResponse.json({ error: "Failed to add class" }, { status: 500 });
   }
 }
+
 
   
   

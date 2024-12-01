@@ -13,7 +13,8 @@ export interface cClass extends Document {
 const classSchema = new Schema<cClass>({
   id: {
     type: String, // Custom class identifier
-    required: true,
+    required: true, // Mark crn as required
+    unique: true, // Ensure no duplicate classes
   },
   name: {
     type: String,
@@ -38,6 +39,7 @@ const classSchema = new Schema<cClass>({
     },
   ],
 });
+
 
 // Let Mongoose and MongoDB handle `_id` creation
 const Class: Model<cClass> =
