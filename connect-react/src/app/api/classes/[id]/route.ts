@@ -78,7 +78,7 @@ export async function PUT(
 
   if (!action || !email) {
     return NextResponse.json(
-      { error: "Both `action` and `email` fields are required" },
+      { error: "Both `action` and `email` fields are required " },
       { status: 400 }
     );
   }
@@ -98,9 +98,9 @@ export async function PUT(
     // Determine update action
     let updateQuery;
     if (action === "add") {
-      updateQuery = { $addToSet: { list: user._id } }; // Add user ID to the list
+      updateQuery = { $addToSet: { list: user } }; // Add user ID to the list
     } else if (action === "delete") {
-      updateQuery = { $pull: { list: user._id } }; // Remove user ID from the list
+      updateQuery = { $pull: { list: user } }; // Remove user ID from the list
     } else {
       return NextResponse.json(
         { error: "Invalid `action` specified. Use 'add' or 'delete'" },

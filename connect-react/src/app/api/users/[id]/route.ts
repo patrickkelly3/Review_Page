@@ -1,9 +1,10 @@
 import connectMongoDB from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/libs/mongodb";
-import User from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/models/userSchema";
+import {User} from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/models/userSchema";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import mongoose from "mongoose";
 import { Types } from "mongoose"; // For ObjectId conversion
+import Class from "@/src/models/classSchema";
 
 
 export async function GET(request: NextRequest, context: { params: {id?: string}}) {
@@ -54,71 +55,87 @@ export async function GET(request: NextRequest, context: { params: {id?: string}
   }
 }
 
-  
-export async function PUT(request: NextRequest, context: { params: { id?: string } }) {
-  // Extract the `id` from params
+export async function PUT(
+  request: NextRequest,
+  context: { params: { id?: string } }
+) {
   const { params } = context;
-  const id = params?.id;
+  const _id = params?.id;
 
-  if (!id) {
-    return NextResponse.json({ error: "ID parameter is required" }, { status: 400 });
+  if (!_id) {
+    return NextResponse.json(
+      { error: "User email parameter is required" },
+      { status: 400 }
+    );
   }
 
-  // Parse the request body to get the new user
   const body = await request.json();
-  const {action, newClass} = body; // Expecting `user` in the request body
+  const { action, id } = body;
 
-  if (!newClass) {
-    return NextResponse.json({ error: "Class data is required" }, { status: 400 });
+  if (!action || !id) {
+    return NextResponse.json(
+      { error: "Both user `action` and `email` fields are required" },
+      { status: 400 }
+    );
   }
 
-  // Connect to the database
   await connectMongoDB();
 
   try {
+    // Find the user by email
+    const oneClass = await Class.findOne({ id });
+    if (!oneClass) {
+      return NextResponse.json(
+        { error: "Class with the given crn not found" },
+        { status: 404 }
+      );
+    }
+
+    // Determine update action
+    let updateQuery;
+    if (action === "add") {
+      updateQuery = { $addToSet: { list: oneClass } }; // Add user ID to the list
+    } else if (action === "delete") {
+      updateQuery = { $pull: { list: oneClass } }; // Remove user ID from the list
+    } else {
+      return NextResponse.json(
+        { error: "Invalid `action` specified. Use 'add' or 'delete'" },
+        { status: 400 }
+      );
+    }
+
+  
     let updatedUser;
 
-    if (action == 'add') {
-        // Find and update the Class object
-        updatedUser = await User.findOneAndUpdate(
-        { id }, // Match the document with the given ID
-        { $push: { list: newClass } }, // Add `newUser` to the `users` array
-        { new: true } // Return the updated document
-      );
-    }
-
-    else if (action == 'delete') {
-        // Find and update the Class object
-        updatedUser = await User.findOneAndUpdate(
-        { id }, // Match the document with the given ID
-        { $pull: { list: newClass } }, // Add `newUser` to the `users` array
-        { new: true } // Return the updated document
-      );
-    }
+    
+      updatedUser = await User.findOneAndUpdate({ email: _id }, updateQuery, {
+        new: true, // Return the updated document
+      });
     
 
     if (!updatedUser) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(
-      { message: "Class updated successfully", updatedUser },
+      { message: "User updated successfully", updatedUser },
       { status: 200 }
     );
   } catch (error) {
     if (error instanceof Error) {
-      console.error("Error updating Class:", error);
+      console.error("Error updating User:", error);
       return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
-      { status: 500 }
-    );
+        { error: "Internal Server Error", details: error.message },
+        { status: 500 }
+      );
     }
-
     console.error("Unknown error occurred:", error);
     return NextResponse.json(
-          { error: "An unknown error occurred" },
-          { status: 500 }
-      );
+      { error: "An unknown error occurred" },
+      { status: 500 }
+    );
   }
-}
-
+} 
