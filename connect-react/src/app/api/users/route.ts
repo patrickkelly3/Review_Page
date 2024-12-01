@@ -1,5 +1,5 @@
 import connectMongoDB from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/libs/mongodb";
-import {User} from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/models/userSchema";
+import {User from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/models/userSchema";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { Types } from "mongoose"; // For ObjectId conversion
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({users});
 }
 
-/*
+
 export async function POST(request: NextRequest) {
     const { myid, username, email, password, list} = await request.json();
   
@@ -40,40 +40,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Failed to add user" }, { status: 500 });
     }
   }
-  */
-  export async function POST(req: NextRequest) {
-    try {
-        const { myid, username, email, password, list} = await req.json();
-
-        if (!myid || !username || !email || !password) {
-            return NextResponse.json({ message: "All fields are required"}, { status: 400 });
-        }
-
-        await connectMongoDB();
-
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return NextResponse.json({ message: "User already exists" }, { status: 400 });
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const newUser = new User({
-            myid,
-            username,
-            email,
-            password: hashedPassword,
-            list: null, // Set list explicitly to null
-        });
-
-        await newUser.save();
-        return NextResponse.json({ message: "User created successfully" }, { status: 201 });
-    } catch (error) {
-        console.error("Error creating user:", error);
-        return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
-    }
-}
-
+  
   
 
 

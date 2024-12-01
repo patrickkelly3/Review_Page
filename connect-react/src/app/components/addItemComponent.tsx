@@ -1,5 +1,7 @@
 "use client";
+
 import React, { useState } from "react";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import styles from "./addItem.module.css";
 
@@ -11,7 +13,8 @@ interface Class {
   period: string;
 }
 
-export default function AddItemComponent() {
+const AddItemComponent: React.FC = () => {
+  const { data: session, status } = useSession(); // Use `useSession` at the top level
   const [_id, setID] = useState<string>(""); // Stores the CRN input
   const [oneClass, setOneClass] = useState<Class | null>(null); // Stores the fetched class by ID
   const [error, setError] = useState<string | null>(null); // Stores error messages
@@ -21,26 +24,27 @@ export default function AddItemComponent() {
   };
 
   const handleSearch = async () => {
-    if (!_id) return;
-  
+    if (!_id) {
+      setError("Please enter a valid CRN.");
+      return;
+    }
+
     try {
       const response = await fetch(`/api/classes/${_id}`, {
         method: "GET",
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to fetch course.");
       }
-  
+
       const data = await response.json();
-      console.log("API Response:", data); // Add this to debug
-  
+      console.log("API Response:", data);
+
       if (!data.results || data.results.length === 0) {
-        console.error("No classes found:", data); // Log unexpected response
         throw new Error("No classes found for the provided CRN.");
       }
-  
-      // Use the first result in the array
+
       setOneClass(data.results[0]);
       setError(null); // Clear any error messages
     } catch (err) {
@@ -49,19 +53,51 @@ export default function AddItemComponent() {
       setError("Could not fetch course. Please check the CRN and try again.");
     }
   };
-  
-  
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
-    if (oneClass) {
-      setError(`Success! Course "${oneClass.title}" has been added.`);
-      setID("");
-      setOneClass(null); // Clear selected course after submission
-    } else {
+  
+    if (!oneClass) {
       setError("Please search for a valid course before submitting.");
+      return;
+    }
+  
+    if (status !== "authenticated" || !session?.user?.email) {
+      setError("User is not authenticated.");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`/api/classes/${_id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: session.user.email, // The authenticated user's email
+          action: "add", // Specify the action (add or delete)
+        }),
+      });
+  
+      if (response.ok) {
+        setError(`Success! Course "${oneClass.title}" has been added.`);
+        setID("");
+        setOneClass(null); // Clear selected course after submission
+      } else {
+        const errorData = await response.json();
+        console.error("API error:", errorData);
+        setError(`Failed to add the user to the course. ${errorData.error || ""}`);
+      }
+    } catch (error) {
+      console.error("Error during submission:", error);
+      setError("An unexpected error occurred. Please try again.");
     }
   };
+  
+
+  if (status === "loading") {
+    return <div>Loading...</div>; // Show loading state
+  }
 
   return (
     <div className={styles.container}>
@@ -123,4 +159,6 @@ export default function AddItemComponent() {
       </main>
     </div>
   );
-}
+};
+
+export default AddItemComponent;
