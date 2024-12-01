@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import "./Login.css";
 import { doCredentialLogin } from "./signInComponent";
 
@@ -13,9 +13,9 @@ function applyGradient(textElement: HTMLElement, startColor: string, endColor: s
   const text = textElement.innerText;
   const length = text.length;
 
-  textElement.innerText = '';
+  textElement.innerText = "";
   for (let i = 0; i < length; i++) {
-    const span = document.createElement('span');
+    const span = document.createElement("span");
     span.innerText = text[i];
 
     const ratio = i / (length - 1);
@@ -31,24 +31,33 @@ function applyGradient(textElement: HTMLElement, startColor: string, endColor: s
 export default function Login({ onSignIn }: LoginProps) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const router = useRouter();
 
   const toggleForm = () => {
     setIsSignUp(!isSignUp);
     setErrorMessage(null);
+    setSuccessMessage(null);
+    resetFields();
   };
 
-  const showSignUpForm = () => {
-    setIsSignUp(true);
-    setErrorMessage(null);
+  const resetFields = () => {
+    const form = document.getElementById("auth-form") as HTMLFormElement;
+    if (form) {
+      form.reset();
+    }
   };
 
   useEffect(() => {
-    const textElement = document.getElementById('gradient-text');
+    const textElement = document.getElementById("gradient-text");
     if (textElement) {
-      applyGradient(textElement, 'red', 'black');
+      applyGradient(textElement, "red", "black");
     }
   }, []);
+
+  const handleContactClick = () => {
+    router.push("/contactComponent");
+  };
 
   const handleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -76,7 +85,9 @@ export default function Login({ onSignIn }: LoginProps) {
       }
 
       setErrorMessage(null);
-      router.push("/profileComponent");
+      setSuccessMessage("Sign-up successful! Please log in.");
+      setIsSignUp(false);
+      resetFields();
     } catch (error) {
       setErrorMessage(error.message || "Something went wrong");
     }
@@ -102,7 +113,7 @@ export default function Login({ onSignIn }: LoginProps) {
         return;
       }
 
-      setErrorMessage("Successful!");
+      setErrorMessage(null);
       router.push("/profileComponent");
     } catch (err) {
       setErrorMessage("Something went wrong. Please try again later.");
@@ -118,20 +129,27 @@ export default function Login({ onSignIn }: LoginProps) {
         </video>
       </div>
       <div className="header">
-        <h2 className="logo" id="gradient-text">UGAConnect</h2>
+        <h2 className="logo" id="gradient-text">
+          UGAConnect
+        </h2>
         <nav className="navigation">
-          <a className="link" href="contact.html">Contact</a>
-          <button className="shadow__btn" onClick={showSignUpForm}>Create Account</button>
+          <button className="link" onClick={handleContactClick}>
+            Contact
+          </button>
+          <button className="shadow__btn" onClick={toggleForm}>
+            {isSignUp ? "Login" : "Create Account"}
+          </button>
         </nav>
       </div>
       <div className="contents">
         <br />
         <div className="form-container">
-          <p id="form-title" className="title">{isSignUp ? "Sign Up" : "Login"}</p>
+          <p id="form-title" className="title">
+            {isSignUp ? "Sign Up" : "Login"}
+          </p>
 
-          {errorMessage && (
-            <p className="error-message">{errorMessage}</p>
-          )}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+          {successMessage && <p className="success-message">{successMessage}</p>}
 
           <form
             id="auth-form"
@@ -157,7 +175,9 @@ export default function Login({ onSignIn }: LoginProps) {
                   <input type="password" name="password" id="password" required />
                 </div>
                 <br />
-                <button className="sign" type="submit">Sign Up</button>
+                <button className="sign" type="submit">
+                  Sign Up
+                </button>
               </>
             ) : (
               <>
@@ -172,7 +192,9 @@ export default function Login({ onSignIn }: LoginProps) {
                     <a href="#">Forgot Password?</a>
                   </div>
                 </div>
-                <button className="sign" type="submit">Sign In</button>
+                <button className="sign" type="submit">
+                  Sign In
+                </button>
               </>
             )}
           </form>
@@ -186,32 +208,38 @@ export default function Login({ onSignIn }: LoginProps) {
         </div>
       </div>
       <footer className="uga-footer">
-      <div className="footer-content">
-                    <div className="footer-left">
-                        <img src="/UGAlogo.png" alt="University of Georgia Logo" className="uga-logo" />
-                        <p>&copy; University of Georgia, Athens, GA 30602</p>
-                        <p>706-542-3000</p>
-                    </div>
-                    <div className="footer-center">
-                        <a href="#">Schools and Colleges</a>
-                        <a href="#">Directory</a>
-                        <a href="#">MyUGA</a>
-                    </div>
-                    <div className="footer-right">
-                        <a href="#">Employment Opportunities</a>
-                        <a href="#">Copyright and Trademarks</a>
-                        <a href="#">Privacy</a>
-                        <a href="#">Website Feedback</a>
-                        <a href="#">Human Trafficking Notice</a>
-                        <a href="#">Reporting Hotline</a>
-                    </div>
-                </div>
-                <div className="social-media">
-                    <a href="#">#UGA</a>
-                    <a href="https://x.com/universityofga"><i className="fab fa-twitter" style={{ fontSize: '24px', color: 'lightskyblue' }}></i></a>
-                    <a href="https://www.instagram.com/universityofga/"><i className="fab fa-instagram" style={{ fontSize: '24px', color: 'red' }}></i></a>
-                    <a href="https://www.linkedin.com/school/university-of-georgia/posts/?feedView=all"><i className="fab fa-linkedin" style={{ fontSize: '24px', color: 'blue' }}></i></a>
-                </div>
+        <div className="footer-content">
+          <div className="footer-left">
+            <img src="/UGAlogo.png" alt="University of Georgia Logo" className="uga-logo" />
+            <p>&copy; University of Georgia, Athens, GA 30602</p>
+            <p>706-542-3000</p>
+          </div>
+          <div className="footer-center">
+            <a href="#">Schools and Colleges</a>
+            <a href="#">Directory</a>
+            <a href="#">MyUGA</a>
+          </div>
+          <div className="footer-right">
+            <a href="#">Employment Opportunities</a>
+            <a href="#">Copyright and Trademarks</a>
+            <a href="#">Privacy</a>
+            <a href="#">Website Feedback</a>
+            <a href="#">Human Trafficking Notice</a>
+            <a href="#">Reporting Hotline</a>
+          </div>
+        </div>
+        <div className="social-media">
+          <a href="#">#UGA</a>
+          <a href="https://x.com/universityofga">
+            <i className="fab fa-twitter" style={{ fontSize: "24px", color: "lightskyblue" }}></i>
+          </a>
+          <a href="https://www.instagram.com/universityofga/">
+            <i className="fab fa-instagram" style={{ fontSize: "24px", color: "red" }}></i>
+          </a>
+          <a href="https://www.linkedin.com/school/university-of-georgia/posts/?feedView=all">
+            <i className="fab fa-linkedin" style={{ fontSize: "24px", color: "blue" }}></i>
+          </a>
+        </div>
       </footer>
     </>
   );
