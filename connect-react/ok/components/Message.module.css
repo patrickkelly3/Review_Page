@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(247, 132, 132);
+    max-width: 25%;
+    margin-top: 1em;
+    margin-left: 2em;
+    border-radius: 1em;
+    border: solid black;
+}
+
+.text {
+    padding-left: 1em;
+    font-size: 16px;
+}
