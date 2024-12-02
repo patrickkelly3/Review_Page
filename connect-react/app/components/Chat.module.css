@@ -25,3 +25,8 @@
     height: 2em;
     width: 3em;
 }
+
+.messages {
+    max-height: 60vh;
+    overflow-y: auto;
+}

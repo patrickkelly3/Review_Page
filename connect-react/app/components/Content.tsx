@@ -3,22 +3,29 @@ import { useState } from "react";
 import ItemContainer from "./ItemContainer";
 import Chat from "./Chat";
 
+type User ={
+    id: string,
+    username: string,
+    email: string,
+    password: string,
+}
+
 type Class = {
-    image: string,
+    _id: string,
     name: string,
-    crn: number,
-    classmates: String[]
+    title: string,
+    professor: string,
+    period: string,
+    image: string,
+    list: User[],
 }
 
-const DUMMY: Class = {
-    image: "https://media.istockphoto.com/id/506670795/vector/red-apple.jpg?s=612x612&w=0&k=20&c=lF9vQ-kQPv3StsSFND4Okt1yqEO86q2XWFECgn0AqWU=",
-    name: "Web Programming",
-    crn: 363636,
-    classmates: ["Tim", "Bobby", "Joanne"]
+interface ContentProps {
+    classes: Class[],
 }
 
-export default function Content() {
-    const[currentClass, changeClass] = useState(DUMMY);
+export default function Content(props: ContentProps) {
+    const[currentClass, changeClass] = useState<Class>(props.classes[0]);
 
     return(
         <div>

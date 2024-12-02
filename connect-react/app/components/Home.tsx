@@ -183,11 +183,11 @@ export default function Login({ onSignIn }: LoginProps) {
               <>
                 <div className="input-group">
                   <label htmlFor="username">Email</label>
-                  <input type="text" name="email" id="email" required />
+                  <input type="text" name="email" id="email" required/>
                 </div>
                 <div className="input-group">
                   <label htmlFor="password">Password</label>
-                  <input type="password" name="password" id="password" required />
+                  <input type="password" name="password" id="password" required/>
                   <div className="forgot">
                     <a href="#">Forgot Password?</a>
                   </div>

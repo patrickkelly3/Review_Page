@@ -1,40 +1,29 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa6";
 import styles from "./Menu.module.css";
 import Item from "./Item";
 import Link from "next/link";
 
-type Class = {
-    image: string,
-    name: string,
-    crn: number,
-    classmates: String[]
+type User ={
+    id: string,
+    username: string,
+    email: string,
+    password: string,
 }
 
-const DUMMY: Class[] = [
-    {
-        image: "https://media.istockphoto.com/id/506670795/vector/red-apple.jpg?s=612x612&w=0&k=20&c=lF9vQ-kQPv3StsSFND4Okt1yqEO86q2XWFECgn0AqWU=",
-        name: "Introduction to Programming",
-        crn: 363636,
-        classmates: ["Tim", "Bobby", "Joanne"]
-    },
-    {
-        image: "/data-structures-img.jpeg",
-        name: "Data Structures",
-        crn: 636363,
-        classmates: ["Bill", "Susan", "Timmy"]
-    },
-    {
-        image: "/web-programming-img.png",
-        name: "Web Programming",
-        crn: 463579,
-        classmates: ["Ryan", "Olivia", "Lily"]
-    },
-]
+type Class = {
+    _id: string,
+    name: string,
+    title: string,
+    professor: string,
+    period: string,
+    image: string,
+    list: User[],
+}
 
 interface MenuProps {
-    onClick: (now: Class)=> void;
+    classes: Class[]
 }
 
 export default function Menu(props: MenuProps) {
@@ -44,18 +33,17 @@ export default function Menu(props: MenuProps) {
         changeClick((prev) => !prev);
     };
 
-    console.log("Rendering Menu with items:", DUMMY); // Debug: log all classes
+    console.log("Rendering Menu with items:", props.classes); // Debug: log all classes
 
     if (isClicked) {
         return (
             <div className={styles.clicked}>
                 <FaBars className={styles.icon} onClick={click} />
                 <ul className={styles.classList}>
-                    {DUMMY.map((current, i) => (
-                        <li key={current.crn}>
+                    {props.classes.map((current, i) => (
+                        <li key={parseInt(current._id)}>
                             <Item 
-                                class={current} 
-                                click={() => props.onClick(current)} 
+                                class={current}  
                             />
                         </li>
                     ))}

@@ -1,6 +1,6 @@
 "use server";
 
-import { signIn, signOut } from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/auth";
+import { signIn, signOut } from "../../src/auth";
 
 export async function doLogout() {
     await signOut({ redirectTo: "/" });

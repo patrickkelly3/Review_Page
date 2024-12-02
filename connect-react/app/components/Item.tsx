@@ -29,12 +29,23 @@ import Link from "next/link";
 import styles from "./Item.module.css";
 import Image from "next/image";
 
-type Class = {
-    image: string,
-    name: string,
-    crn: number,
-    classmates: String[]
+type User ={
+    id: string,
+    username: string,
+    email: string,
+    password: string,
 }
+
+type Class = {
+    _id: string,
+    name: string,
+    title: string,
+    professor: string,
+    period: string,
+    image: string,
+    list: User[],
+}
+
 type ClassProps = {
     class: Class;
     click?: () => void;
@@ -49,8 +60,7 @@ export default function Item({ class: cls, click }: ClassProps) {
                 className={styles.classImage}
             />
             <h3>{cls.name}</h3>
-            <p>CRN: {cls.crn}</p>
-            <p>Classmates: {cls.classmates.join(", ")}</p>
+            <p>Period: {cls.period}</p>
         </div>
     );
 }

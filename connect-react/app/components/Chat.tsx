@@ -2,12 +2,23 @@ import { FormEvent, useState } from "react";
 import Message from "./Message";
 import styles from "./Chat.module.css";
 
-type Class = {
-    image: string,
+type User ={
+    id: string,
+    username: string,
+    email: string,
+    password: string,
+  }
+  
+  type Class = {
+    _id: string,
     name: string,
-    crn: number,
-    classmates: String[]
-}
+    title: string,
+    professor: string,
+    period: string,
+    image: string,
+    list: User[],
+  }
+  
 
 interface ClassProps {
     class: Class;
@@ -51,7 +62,9 @@ export default function Chat(props: ClassProps) {
 
     return (
         <div className={styles.chat}>
-            {messages.map((current, i) => <Message sender={current.sender} content={current.content} key={i}></Message>)}
+            <div className={styles.messages}>
+                {messages.map((current, i) => <Message sender={current.sender} content={current.content} key={i}></Message>)}
+            </div>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <textarea className={styles.text} value={textarea} onChange={handleChange}></textarea>
                 <button type="submit" className={styles.submit}>Send</button>

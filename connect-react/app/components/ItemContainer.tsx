@@ -35,13 +35,22 @@ export default function ItemContainer(props: ClassProps) {
 import Image from 'next/image';
 import styles from "./ItemContainer.module.css";
 
-type Class = {
-    image: string,
-    name: string,
-    crn: number,
-    classmates: String[]
+type User ={
+    id: string,
+    username: string,
+    email: string,
+    password: string,
 }
 
+type Class = {
+    _id: string,
+    name: string,
+    title: string,
+    professor: string,
+    period: string,
+    image: string,
+    list: User[],
+}
 interface ClassProps {
     class: Class;
 }
@@ -56,12 +65,10 @@ export default function ItemContainer(props: ClassProps) {
                 height={100}
                 priority
             />
-            <h1>{props.class.name} CRN#{props.class.crn}</h1>
+            <h1>{props.class.name} Period: {props.class.period}</h1>
             <div>
-                <header>Classmates:</header>
-                <ul>
-                    {props.class.classmates.map((current, i) => <li key={i}>{current}</li>)}
-                </ul>
+                <header>Professor:</header>
+                <p>{props.class.professor}</p>
             </div>
         </div>
     );

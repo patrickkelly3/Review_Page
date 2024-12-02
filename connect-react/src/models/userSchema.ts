@@ -19,7 +19,7 @@ const userSchema: Schema<IUser> = new Schema({
   list: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Class",
     },
   ],
 });

@@ -1,17 +1,14 @@
-
-
 .clicked {
     position: absolute;
     background-color: black;
     display: flex;
     justify-content: center;
     width: 15%;
-    z-index: 1;
     left: 0;
     color: white;
     flex-direction: column;
     justify-content: flex-start;
-    height: 100%;
+    height: 100vh;
     overflow-y: auto; /* Enable vertical scrolling */
     scrollbar-width: thin; /* Optional: style for thin scrollbars (Firefox) */
     scrollbar-color: white black; /* Optional: color for scrollbars (Firefox) */
@@ -34,6 +31,8 @@
     color: white;
     height: 4em;
     width: 4em;
+    position: absolute;
+
 }
 
 .classList {

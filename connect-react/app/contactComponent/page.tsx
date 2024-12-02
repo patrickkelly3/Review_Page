@@ -1,5 +1,5 @@
 "use client";
-import Contact from "@/src/app/components/Contact";
+import Contact from "@/app/components/Contact";
 import { useState } from "react";
 
 
