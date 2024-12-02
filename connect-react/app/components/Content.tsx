@@ -23,9 +23,18 @@ type Class = {
 interface ContentProps {
     classes: Class[],
 }
+const DEFAULT: Class ={
+    _id: "0",
+    name: "",
+    title: "",
+    professor: "",
+    period: "",
+    image: "",
+    list: [],
+}
 
 export default function Content(props: ContentProps) {
-    const[currentClass, changeClass] = useState<Class>(props.classes[0]);
+    const[currentClass, changeClass] = useState<Class>(DEFAULT);
 
     return(
         <div>

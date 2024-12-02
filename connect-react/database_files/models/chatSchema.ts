@@ -8,14 +8,6 @@ export interface Chat extends Document {
   messages: Message[]; // Use the imported uUser interface
 }
 const chatSchema = new Schema<Chat>({
-  _id: {
-    type: String, // Use a string for the custom ID
-    required: true
-  },
-  class: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Class",
-  },
   messages: [
     {
       type: mongoose.Schema.Types.ObjectId,

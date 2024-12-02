@@ -1,5 +1,5 @@
-import connectMongoDB from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/libs/mongodb";
-import {User} from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/models/userSchema";
+import connectMongoDB from "../../../../src/libs/mongodb";
+import {User} from "../../../../src/models/userSchema";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import mongoose from "mongoose";
@@ -11,18 +11,18 @@ export async function GET(request: NextRequest, context: { params: {id?: string}
   
   // Access and await the params
   const { params } = context;
-  const id = params?.id;
+  const email = params?.id;
 
   await connectMongoDB();
 
 
-  if (!id) {
+  if (!email) {
     return NextResponse.json({ error: "ID parameter is required" }, { status: 400 });
   }
 
   try {
     
-    const query: any = { id }; // Use 'id' for matching
+    const query: any = { email }; // Use 'email' for matching
     console.log("Query:", query);
 
     const results = await User.find(query);

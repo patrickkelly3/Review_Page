@@ -1,6 +1,6 @@
-import connectMongoDB from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/libs/mongodb";
-import Class from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/models/classSchema";
-import {User} from "/Users/patrickkelly/Desktop/UGAConnect/UGAConnect/connect-react/src/models/userSchema";
+import connectMongoDB from "../../../../src/libs/mongodb";
+import Class from "../../../../src/models/classSchema";
+import {User} from "../../../../src/models/userSchema";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import mongoose from "mongoose";

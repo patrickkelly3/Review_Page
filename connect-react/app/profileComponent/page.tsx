@@ -3,6 +3,7 @@ import Nav from "../components/Nav";
 import Menu from "../components/Menu";
 import Content from "../components/Content"
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 type User ={
   id: string,
@@ -32,26 +33,31 @@ const DEFAULT: Class ={
 }
 
 export default function Home() {
-    const[classes, setClasses] = useState<Class[]>([DEFAULT]);
-
-
-    useEffect(() => {
-      const fetchClasses = async () => {
-          try {
-            const response = await fetch("/api/classes");
-            if(!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const items = await response.json();
-            console.log(items.classes)
-            setClasses(items.classes)
-          } catch(error) {
-            console.log("Error from retrieving classes.")
+  const { data: session } = useSession();
+  const user = session?.user;
+  const[classes, setClasses] = useState<Class[]>([DEFAULT]);
+  console.log(user)
+  
+  useEffect(() => {
+    const fetchClasses = async () => {
+        try {
+          const response = await fetch(`/api/users/${user?.email}`);
+          if(!response.ok) {
+              throw new Error("Network response was not ok");
           }
-      }
+          const items = await response.json();
+          let classList = items.list;
+          console.log("ClassList:", classList)
+          setClasses(classList)
+        } catch(error) {
+          console.log("Error from retrieving classes.")
+        }
+    }
+    if(user) {
       fetchClasses();
-  }, []);
-
+    }
+  }, [user]);
+  
     return (
       <div>
         <Menu classes={classes}/>
