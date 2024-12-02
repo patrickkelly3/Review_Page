@@ -48,12 +48,12 @@ type Class = {
 
 type ClassProps = {
     class: Class;
-    click?: () => void;
+    handler: (newClass:Class) => void;
 };
 
-export default function Item({ class: cls, click }: ClassProps) {
+export default function Item({ class: cls, handler }: ClassProps) {
     return (
-        <div className={styles.itemContainer} onClick={click}>
+        <div className={styles.itemContainer} onClick={()=>handler(cls)}>
             <img
                 src={cls.image}
                 alt={`${cls.name} thumbnail`}

@@ -21,7 +21,7 @@ type Class = {
 }
 
 interface ContentProps {
-    classes: Class[],
+    current: Class,
 }
 const DEFAULT: Class ={
     _id: "0",
@@ -34,12 +34,10 @@ const DEFAULT: Class ={
 }
 
 export default function Content(props: ContentProps) {
-    const[currentClass, changeClass] = useState<Class>(DEFAULT);
-
     return(
         <div>
-            <ItemContainer class={currentClass}/>
-            <Chat class={currentClass}/>
+            <ItemContainer class={props.current}/>
+            <Chat class={props.current}/>
         </div>
     );
 }

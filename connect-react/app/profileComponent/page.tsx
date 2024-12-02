@@ -36,6 +36,7 @@ export default function Home() {
   const { data: session } = useSession();
   const user = session?.user;
   const[classes, setClasses] = useState<Class[]>([DEFAULT]);
+  const[currentClass, changeClass] = useState<Class>(DEFAULT);
   console.log(user)
   
   useEffect(() => {
@@ -46,9 +47,25 @@ export default function Home() {
               throw new Error("Network response was not ok");
           }
           const items = await response.json();
-          let classList = items.list;
-          console.log("ClassList:", classList)
-          setClasses(classList)
+          let classList = items.results[0].list;
+          classList = await Promise.all(classList.map(async (current: string) => {
+            try {
+              const response = await fetch(`/api/classes/${current}`);
+              if(!response.ok) {
+                  throw new Error("Network response was not ok");
+              }
+              const items = await response.json();
+              return items.results[0]
+            } catch(error) {
+              console.log("Error from retrieving class.")
+            }
+          }));
+          classList = classList.filter(function(element) {
+            return element !== undefined;
+         });
+          console.log("Classlist", classList)
+          setClasses(classList || [])
+          changeClass(classList[0])
         } catch(error) {
           console.log("Error from retrieving classes.")
         }
@@ -57,12 +74,16 @@ export default function Home() {
       fetchClasses();
     }
   }, [user]);
+
+    const handler = (newClass: Class) => {
+      changeClass(newClass)
+    }
   
     return (
       <div>
-        <Menu classes={classes}/>
+        <Menu classes={classes} handler={handler}/>
         <Nav/>
-        <Content classes={classes}/>
+        <Content current={currentClass}/>
       </div>
     );
   }

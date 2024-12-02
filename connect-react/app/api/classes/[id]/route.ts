@@ -15,17 +15,17 @@ interface RouteParams{
 export async function GET(request: NextRequest, context: { params: {id?: string}}) {
   // Access and await the params
   const { params } = context;
-  const id = params?.id;
+  const _id = params?.id;
 
   await connectMongoDB();
 
 
-  if (!id) {
+  if (!_id) {
     return NextResponse.json({ error: "ID parameter is required" }, { status: 400 });
   }
 
   try {
-    const query: any = { id }; // Use 'id' for matching
+    const query: any = { _id }; // Use 'id' for matching
     console.log("Query:", query);
 
     const results = await Class.find(query);

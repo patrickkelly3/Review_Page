@@ -23,7 +23,8 @@ type Class = {
 }
 
 interface MenuProps {
-    classes: Class[]
+    classes: Class[],
+    handler: (newClass:Class) => void
 }
 
 export default function Menu(props: MenuProps) {
@@ -43,7 +44,7 @@ export default function Menu(props: MenuProps) {
                     {props.classes.map((current, i) => (
                         <li key={parseInt(current._id)}>
                             <Item 
-                                class={current}  
+                                class={current} handler={props.handler}
                             />
                         </li>
                     ))}
