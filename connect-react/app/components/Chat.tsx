@@ -26,6 +26,7 @@ type Chat = {
     messages: Message[];
 }
 
+
 type Message = {
     sender: String,
     content: String
@@ -35,16 +36,6 @@ interface ClassProps {
     class: Class;
 }
 
-const DUMMY_MESSAGES = [
-    {
-        sender: "Tim",
-        content: "My name is Tim"
-    },
-    {
-        sender: "Bobby",
-        content: "Jet fuel can't melt steel beams"
-    }
-]
 
 export default function Chat(props: ClassProps) {
     const[messages, addMessage] = useState<Message[]>(props.class.chat?.messages || []);
@@ -55,12 +46,20 @@ export default function Chat(props: ClassProps) {
         changeText((event.target as HTMLTextAreaElement).value)
     };
 
-    const handleSubmit= (e: FormEvent) => {
+    const handleSubmit= async (e: FormEvent) => {
         e.preventDefault();
         const newMessage = {
-            sender: "Current User",
+            sender: "Current User", 
             content: textarea
         }
+        const response = await fetch(`/api/classes/${props.class._id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newMessage)
+        });
+        console.log(response)
         addMessage((current) => {
             return [...current, newMessage]
         })
@@ -70,7 +69,7 @@ export default function Chat(props: ClassProps) {
     return (
         <div className={styles.chat}>
             <div className={styles.messages}>
-                {messages.map((current, i) => <Message sender={current.sender} content={current.content} key={i}></Message>)}
+                {messages.map((current, i) => <Message sender={current.sender} content={current.content} key={i} classChat={props.class}></Message>)}
             </div>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <textarea className={styles.text} value={textarea} onChange={handleChange}></textarea>

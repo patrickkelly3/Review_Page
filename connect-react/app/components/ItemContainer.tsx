@@ -34,6 +34,7 @@ export default function ItemContainer(props: ClassProps) {
 */
 import Image from 'next/image';
 import styles from "./ItemContainer.module.css";
+import { useSession } from 'next-auth/react';
 
 type User ={
     id: string,
@@ -56,6 +57,20 @@ interface ClassProps {
 }
 
 export default function ItemContainer(props: ClassProps) {
+    const { data: session } = useSession();
+    const user = session?.user;
+
+    const deleteMessage = async (e: Event) => {
+        e.preventDefault();
+        try {
+            const response = await fetch(`/api/classes/${props.class._id}`, {method:"PUT", body: JSON.stringify({action:"delete", email: user.email})},);
+            if(!response.ok) {
+                throw new Error("Network Response was not ok");
+            }
+        } catch(error) {
+            console.log("Error Deleting.")
+        }
+    }
     return(
         <div className={styles.container}>
             <Image className={styles.image}
@@ -70,6 +85,8 @@ export default function ItemContainer(props: ClassProps) {
                 <header>Professor:</header>
                 <p>{props.class.professor}</p>
             </div>
+            <button>Delete Class</button>
+
         </div>
     );
 }
