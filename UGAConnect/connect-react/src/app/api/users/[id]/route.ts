@@ -7,30 +7,37 @@ import { Types } from "mongoose"; // For ObjectId conversion
 import Class from "@/src/models/classSchema";
 
 
-export async function GET(request: NextRequest, context: { params: { email?: string; _id?: string } }) {
-  const { email, _id } = context.params;
+export async function GET(
+  request: NextRequest,
+  context: { params: { id?: string } } // Dynamic `id` parameter
+) {
+  const { id } = context.params;
 
-  if (!email && !_id) {
-    return NextResponse.json({ error: "Either 'id' or '_id' is required" }, { status: 400 });
+  if (!id) {
+    return NextResponse.json({ error: "'id' is required" }, { status: 400 });
   }
 
   await connectMongoDB();
 
   try {
     let query: any;
-
-    if (_id) {
-      // Validate and query by _id
-      if (!mongoose.Types.ObjectId.isValid(_id)) {
+  
+    if (id.endsWith("@gmail.com")) {
+      const email = id;
+      // Treat `id` as an email if it ends with @gmail.com
+      query = { email};
+      console.log("QUERY BY Email: " + id);
+    } else {
+      // Validate `_id` format for MongoDB ObjectId
+      if (!mongoose.Types.ObjectId.isValid(id)) {
         return NextResponse.json({ error: "Invalid '_id' format" }, { status: 400 });
       }
-      query = { _id: new mongoose.Types.ObjectId(_id) };
-    } else if (email) {
-      // Query by id
-      query = { email };
+      query = { _id: new mongoose.Types.ObjectId(id) };
+      console.log("QUERY BY _ID: " + id);
     }
 
-    const results = await Class.find(query);
+    // Execute the query
+    const results = await User.find(query);
 
     if (!results || results.length === 0) {
       return NextResponse.json(
@@ -56,6 +63,7 @@ export async function GET(request: NextRequest, context: { params: { email?: str
     );
   }
 }
+
 
 export async function PUT(
   request: NextRequest,

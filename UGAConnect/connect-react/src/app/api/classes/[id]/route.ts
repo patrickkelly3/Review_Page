@@ -14,27 +14,29 @@ interface RouteParams{
  }
 
 
- export async function GET(request: NextRequest, context: { params: { id?: string; _id?: string } }) {
-  const { id, _id } = context.params;
 
-  if (!id && !_id) {
-    return NextResponse.json({ error: "Either 'id' or '_id' is required" }, { status: 400 });
+ export async function GET(request: NextRequest, context: { params: { id?: string; _id?: string } }) {
+  const { id } = context.params; // Assume id contains either 'id' or '_id'
+
+  if (!id) {
+    return NextResponse.json({ error: "'id' is required" }, { status: 400 });
   }
 
   await connectMongoDB();
 
   try {
     let query: any;
-
-    if (_id) {
-      // Validate and query by _id
-      if (!mongoose.Types.ObjectId.isValid(_id)) {
+    if (id.startsWith("CRN")) {
+      // If the first three characters are "CRN", query by 'id'
+      query = { id };
+      console.log("QUERY BY ID: " + id);
+    } else {
+      // Otherwise, treat it as '_id' and validate it
+      if (!mongoose.Types.ObjectId.isValid(id)) {
         return NextResponse.json({ error: "Invalid '_id' format" }, { status: 400 });
       }
-      query = { _id: new mongoose.Types.ObjectId(_id) };
-    } else if (id) {
-      // Query by id
-      query = { id };
+      query = { _id: new mongoose.Types.ObjectId(id) };
+      console.log("QUERY BY _ID: " + id);
     }
 
     const results = await Class.find(query);
@@ -63,6 +65,8 @@ interface RouteParams{
     );
   }
 }
+
+ 
 
 
 
