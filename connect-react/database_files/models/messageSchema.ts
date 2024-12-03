@@ -12,8 +12,7 @@ const MessageSchema = new Schema<Message>({
     required: true
   },
   sender: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Message",
+    type: String,
   },
   content: {
     type: String,

@@ -1,0 +1,19 @@
+.container {
+    background-color: grey;
+    width: 75%;
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    border-radius: .5em;
+    border: solid black;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    z-index: 2;
+}
+
+.image {
+    border: solid black;
+    border-radius: .5em ;
+}
