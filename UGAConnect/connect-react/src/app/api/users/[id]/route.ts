@@ -7,51 +7,53 @@ import { Types } from "mongoose"; // For ObjectId conversion
 import Class from "@/src/models/classSchema";
 
 
-export async function GET(request: NextRequest, context: { params: {id?: string}}) {
-  
-  // Access and await the params
-  const { params } = context;
-  const email = params?.id;
+export async function GET(request: NextRequest, context: { params: { email?: string; _id?: string } }) {
+  const { email, _id } = context.params;
+
+  if (!email && !_id) {
+    return NextResponse.json({ error: "Either 'id' or '_id' is required" }, { status: 400 });
+  }
 
   await connectMongoDB();
 
-
-  if (!email) {
-    return NextResponse.json({ error: "ID parameter is required" }, { status: 400 });
-  }
-
   try {
-    
-    const query: any = { email }; // Use 'id' for matching
-    console.log("Query:", query);
+    let query: any;
 
-    const results = await User.find(query);
+    if (_id) {
+      // Validate and query by _id
+      if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return NextResponse.json({ error: "Invalid '_id' format" }, { status: 400 });
+      }
+      query = { _id: new mongoose.Types.ObjectId(_id) };
+    } else if (email) {
+      // Query by id
+      query = { email };
+    }
+
+    const results = await Class.find(query);
 
     if (!results || results.length === 0) {
       return NextResponse.json(
-        { error: "No users found matching criteria" },
+        { error: "No classes found matching criteria" },
         { status: 404 }
       );
     }
 
     return NextResponse.json({ results }, { status: 200 });
- 
   } catch (error) {
     if (error instanceof Error) {
-      // Narrow the type to `Error` to access `.message`
-      console.error("Error fetching user:", error.message);
+      console.error("Error fetching class:", error);
       return NextResponse.json(
-          { error: "Error fetching user", details: error.message },
-          { status: 500 }
+        { error: "Failed to fetch class", details: error.message },
+        { status: 500 }
       );
-  }
-  // Fallback for non-Error types
-  console.error("Unknown error occurred:", error);
-  return NextResponse.json(
+    }
+
+    console.error("Unknown error occurred:", error);
+    return NextResponse.json(
       { error: "An unknown error occurred" },
       { status: 500 }
-  );
-  
+    );
   }
 }
 
