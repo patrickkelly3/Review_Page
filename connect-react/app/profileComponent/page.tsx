@@ -19,7 +19,18 @@ type Class = {
   professor: string,
   period: string,
   image: string,
+  chat?: Chat,
   list: User[],
+}
+type Chat = {
+  id: string;
+  class: Class;
+  messages: Message[];
+}
+
+type Message = {
+  sender: String,
+  content: String
 }
 
 const DEFAULT: Class ={

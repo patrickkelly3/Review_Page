@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import Message from "./Message";
 import styles from "./Chat.module.css";
 
@@ -9,23 +9,30 @@ type User ={
     password: string,
   }
   
-  type Class = {
+type Class = {
     _id: string,
     name: string,
     title: string,
     professor: string,
     period: string,
     image: string,
+    chat?: Chat,
     list: User[],
-  }
-  
-
-interface ClassProps {
-    class: Class;
 }
+
+type Chat = {
+    id: string;
+    class: Class;
+    messages: Message[];
+}
+
 type Message = {
     sender: String,
     content: String
+}
+
+interface ClassProps {
+    class: Class;
 }
 
 const DUMMY_MESSAGES = [
@@ -40,7 +47,7 @@ const DUMMY_MESSAGES = [
 ]
 
 export default function Chat(props: ClassProps) {
-    const[messages, addMessage] = useState<Message[]>(DUMMY_MESSAGES);
+    const[messages, addMessage] = useState<Message[]>(props.class.chat?.messages || []);
     const[textarea, changeText] = useState<string>("");
 
     const handleChange = (event: FormEvent) => {

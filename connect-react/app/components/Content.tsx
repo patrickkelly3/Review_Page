@@ -17,20 +17,23 @@ type Class = {
     professor: string,
     period: string,
     image: string,
+    chat?: Chat,
     list: User[],
 }
+type Chat = {
+    id: string;
+    class: Class;
+    messages: Message[];
+}
+
+type Message = {
+    sender: String,
+    content: String
+}
+  
 
 interface ContentProps {
     current: Class,
-}
-const DEFAULT: Class ={
-    _id: "0",
-    name: "",
-    title: "",
-    professor: "",
-    period: "",
-    image: "",
-    list: [],
 }
 
 export default function Content(props: ContentProps) {
