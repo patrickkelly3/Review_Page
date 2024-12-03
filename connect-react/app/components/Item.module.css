@@ -22,3 +22,7 @@
     border-radius: 5px; /* Optional: Add rounded corners */
     margin-bottom: 1em; /* Space between image and text */
 }
+
+.itemContainer:hover {
+    background-color: #444;
+}

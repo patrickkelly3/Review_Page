@@ -12,21 +12,29 @@ interface RouteParams{
     }
  }
 
-export async function GET(request: NextRequest, context: { params: {id?: string}}) {
-  // Access and await the params
-  const { params } = context;
-  const _id = params?.id;
+ export async function GET(request: NextRequest, context: { params: { id?: string; _id?: string } }) {
+  const { id } = context.params; // Assume id contains either 'id' or '_id'
+
+  if (!id) {
+    return NextResponse.json({ error: "'id' is required" }, { status: 400 });
+  }
 
   await connectMongoDB();
 
-
-  if (!_id) {
-    return NextResponse.json({ error: "ID parameter is required" }, { status: 400 });
-  }
-
   try {
-    const query: any = { _id }; // Use 'id' for matching
-    console.log("Query:", query);
+    let query: any;
+    if (id.startsWith("CRN")) {
+      // If the first three characters are "CRN", query by 'id'
+      query = { id };
+      console.log("QUERY BY ID: " + id);
+    } else {
+      // Otherwise, treat it as '_id' and validate it
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return NextResponse.json({ error: "Invalid '_id' format" }, { status: 400 });
+      }
+      query = { _id: new mongoose.Types.ObjectId(id) };
+      console.log("QUERY BY _ID: " + id);
+    }
 
     const results = await Class.find(query);
 
@@ -39,21 +47,19 @@ export async function GET(request: NextRequest, context: { params: {id?: string}
 
     return NextResponse.json({ results }, { status: 200 });
   } catch (error) {
-
     if (error instanceof Error) {
-        console.error("Error fetching class:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch class", details: error.message },
-      { status: 500 }
-    );
+      console.error("Error fetching class:", error);
+      return NextResponse.json(
+        { error: "Failed to fetch class", details: error.message },
+        { status: 500 }
+      );
     }
-    
+
     console.error("Unknown error occurred:", error);
     return NextResponse.json(
-        { error: "An unknown error occurred" },
-        { status: 500 }
+      { error: "An unknown error occurred" },
+      { status: 500 }
     );
-    
   }
 }
 
