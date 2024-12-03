@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import mongoose from "mongoose";
 import { Types } from "mongoose"; // For ObjectId conversion
+import { ObjectId } from "mongodb";
 
 interface RouteParams{
     params: {
@@ -12,21 +13,29 @@ interface RouteParams{
     }
  }
 
-export async function GET(request: NextRequest, context: { params: {id?: string}}) {
-  // Access and await the params
-  const { params } = context;
-  const id = params?.id;
+
+ export async function GET(request: NextRequest, context: { params: { id?: string; _id?: string } }) {
+  const { id, _id } = context.params;
+
+  if (!id && !_id) {
+    return NextResponse.json({ error: "Either 'id' or '_id' is required" }, { status: 400 });
+  }
 
   await connectMongoDB();
 
-
-  if (!id) {
-    return NextResponse.json({ error: "ID parameter is required" }, { status: 400 });
-  }
-
   try {
-    const query: any = { id }; // Use 'id' for matching
-    console.log("Query:", query);
+    let query: any;
+
+    if (_id) {
+      // Validate and query by _id
+      if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return NextResponse.json({ error: "Invalid '_id' format" }, { status: 400 });
+      }
+      query = { _id: new mongoose.Types.ObjectId(_id) };
+    } else if (id) {
+      // Query by id
+      query = { id };
+    }
 
     const results = await Class.find(query);
 
@@ -39,23 +48,23 @@ export async function GET(request: NextRequest, context: { params: {id?: string}
 
     return NextResponse.json({ results }, { status: 200 });
   } catch (error) {
-
     if (error instanceof Error) {
-        console.error("Error fetching class:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch class", details: error.message },
-      { status: 500 }
-    );
+      console.error("Error fetching class:", error);
+      return NextResponse.json(
+        { error: "Failed to fetch class", details: error.message },
+        { status: 500 }
+      );
     }
-    
+
     console.error("Unknown error occurred:", error);
     return NextResponse.json(
-        { error: "An unknown error occurred" },
-        { status: 500 }
+      { error: "An unknown error occurred" },
+      { status: 500 }
     );
-    
   }
 }
+
+
 
   
 
