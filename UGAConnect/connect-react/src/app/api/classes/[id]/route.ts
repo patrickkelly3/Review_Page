@@ -6,6 +6,7 @@ import { NextRequest } from "next/server";
 import mongoose from "mongoose";
 import { Types } from "mongoose"; // For ObjectId conversion
 import { ObjectId } from "mongodb";
+import Message from "@/src/models/messageSchema";
 
 interface RouteParams{
     params: {
@@ -66,11 +67,9 @@ interface RouteParams{
   }
 }
 
- 
 
 
 
-  
 
 export async function PUT(
   request: NextRequest,
@@ -149,6 +148,87 @@ export async function PUT(
         { status: 500 }
       );
     }
+    console.error("Unknown error occurred:", error);
+    return NextResponse.json(
+      { error: "An unknown error occurred" },
+      { status: 500 }
+    );
+  }
+}
+
+
+export async function POST(
+  request: NextRequest,
+  context: { params: { id?: string } }
+) {
+  const { id } = context.params;
+
+  if (!id) {
+    return NextResponse.json(
+      { error: "Class ID parameter is required" },
+      { status: 400 }
+    );
+  }
+
+  const body = await request.json();
+  const { message } = body;
+
+  if (!message || !message.sender || !message.content) {
+    return NextResponse.json(
+      {
+        error: "A valid `message` object with `sender` and `content` fields is required",
+      },
+      { status: 400 }
+    );
+  }
+
+  await connectMongoDB();
+
+  try {
+    // Validate the sender exists
+    const senderExists = await User.findById(message.sender);
+    if (!senderExists) {
+      return NextResponse.json(
+        { error: "Sender with the given ID not found" },
+        { status: 404 }
+      );
+    }
+
+    // Validate the class exists
+    const targetClass = await Class.findOne({ id });
+    if (!targetClass) {
+      return NextResponse.json(
+        { error: "Class with the given ID not found" },
+        { status: 404 }
+      );
+    }
+
+    // Create a new message document
+    const newMessage = await Message.create({
+      sender: message.sender,
+      content: message.content,
+    });
+
+    // Add the new message to the class's chat array
+    targetClass.chat.push(newMessage);
+    await targetClass.save();
+
+    return NextResponse.json(
+      {
+        message: "Message added to class chat successfully",
+        updatedClass: targetClass,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error("Error adding message to chat:", error);
+      return NextResponse.json(
+        { error: "Internal Server Error", details: error.message },
+        { status: 500 }
+      );
+    }
+
     console.error("Unknown error occurred:", error);
     return NextResponse.json(
       { error: "An unknown error occurred" },
